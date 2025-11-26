@@ -1,6 +1,6 @@
 # ProcessMonitor
 
-**ProcessMonitor** is a lightweight Windows C++ application that allows you to monitor system performance in real-time. It tracks CPU usage as well as active processes, providing detailed information about each running process.
+**ProcessMonitor** is a lightweight Windows C++ application that allows you to monitor system performance in real-time. It tracks CPU and RAM usage, providing information about each running process.
 
 
 ---
