@@ -18,22 +18,5 @@
 - **CMake** (optional, if you want to use a CMake build)
 - Windows
 
-### Build Instructions
-
-#### Using Visual Studio (Windows)
-
-1. Open the project folder in **Visual Studio**.
-2. Select the build configuration: `Debug` or `Release`.
-3. Press **Build Solution** (`Ctrl + Shift + B`).
-4. The executable will be located in the `Debug` or `Release` folder.
-
-#### Using CMake (Cross-platform)
-
-```bash
-mkdir build
-cd build
-cmake ..
-cmake --build .
-```
 ---
 
