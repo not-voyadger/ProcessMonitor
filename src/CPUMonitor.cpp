@@ -1,9 +1,11 @@
 #include "CPUMonitor.hpp"
+#include "ProcessMonitor.hpp"
 #include <iostream>
 #include <windows.h>
 #include <vector>
 
-CPUMonitor::CPUMonitor() : usage(0.0), prevIdle(0), prevKernel(0), prevUser(0) {}
+CPUMonitor::CPUMonitor() 
+    : prevIdle(0), prevKernel(0), prevUser(0) {}
 CPUMonitor::~CPUMonitor() {}
 
 void CPUMonitor::calculateUsage() {
@@ -40,43 +42,10 @@ void CPUMonitor::calculateUsage() {
     prevUser = user.QuadPart;
 }
 
-double CPUMonitor::getUsage() const{
-    return usage;
+void CPUMonitor::displayCPU() const{
+    std::cout << "Current usage of CPU is: " << usage << "%." << std::endl;
 }
 
-
-void CPUMonitor::update() {
-    calculateUsage();
-    usageHistory.push_back(usage);
-    if (usageHistory.size() > 100) {
-        usageHistory.erase(usageHistory.begin());
-    }
-}
-
-double CPUMonitor::getAverageUsage(size_t lastN) const{
-    if (usageHistory.empty()) return 0.0; 
-    
-    size_t start = 0;
-    if (usageHistory.size() > lastN) {
-        start = usageHistory.size() - lastN;
-    } else {
-        return 0.0;
-    }
-
-    double sum = 0.0;
-
-    for (size_t i = start; i < usageHistory.size(); ++i) {
-        sum += usageHistory[i];
-    } 
-
-    return sum / (usageHistory.size() - start); 
-}   
-
-void CPUMonitor::display() const{
-    std::cout << "Current usage: " << usage << "%." << std::endl;
-}
-
-void CPUMonitor::displayAverage(size_t lastN) const{
-    double avg = getAverageUsage(lastN);
-    std::cout << "Average usage for last " << lastN << " measures is " << avg << "%." << std::endl; 
+void CPUMonitor::displayAverageCPU(size_t lastN) const{
+    std::cout << "Average CPU usage for last " << lastN << " measures is " << getAverageUsage(lastN) << "%." << std::endl; 
 }

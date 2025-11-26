@@ -1,13 +1,22 @@
 #ifndef PROCESS_MONITOR_HPP
 #define PROCESS_MONITOR_HPP
 
-class ProcessMonitor {
-    public:
-        ProcessMonitor();
-        virtual ~ProcessMonitor();
+#include <vector>
 
-        virtual void update() = 0;
-        virtual void display() const = 0;
+class ProcessMonitor {
+protected:
+    double usage = 0.0;
+    std::vector<double> usageHistory;
+
+    virtual void calculateUsage() = 0;
+
+public:
+    ProcessMonitor();
+    virtual ~ProcessMonitor();
+
+    void update();
+    double getUsage() const;
+    double getAverageUsage(size_t lastN = 10) const;
 };
-    
+
 #endif
