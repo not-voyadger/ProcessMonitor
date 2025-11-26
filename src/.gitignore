@@ -1,0 +1,7 @@
+# Build
+*.exe
+*.ilk
+*.pdb
+
+# IDE Config
+.vscode/
