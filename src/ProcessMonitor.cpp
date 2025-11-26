@@ -16,16 +16,18 @@ void ProcessMonitor::update() {
         usageHistory.erase(usageHistory.begin());
 }
 
-double ProcessMonitor::getAverageUsage(size_t lastN) const{
-    if (usageHistory.empty()) return 0.0; 
+double ProcessMonitor::getAverageUsage(size_t lastN) {
+    if (usageHistory.size() < 10) return lastAverage;
     
-    size_t start = (usageHistory.size() > lastN) ? usageHistory.size() - lastN : 0;
-
     double sum = 0.0;
-
+    size_t start = (usageHistory.size() > lastN) ? usageHistory.size() - lastN : 0;
+    
     for (size_t i = start; i < usageHistory.size(); ++i) {
         sum += usageHistory[i];
-    } 
-
-    return sum / (usageHistory.size() - start);
+    }
+    
+    lastAverage = sum / (usageHistory.size() - start);
+    usageHistory.clear();
+    
+    return lastAverage;
 }

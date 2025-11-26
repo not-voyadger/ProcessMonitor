@@ -25,9 +25,18 @@ void RAMMonitor::calculateUsage() {
 }
 
 void RAMMonitor::displayRAM() const{
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    if (usage >= 80.0) {
+        SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_INTENSITY);
+    } else {
+        SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+    }
+
     std::cout << "Current usage of RAM is: " << usage << "%." << std::endl;
+    
+    SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 }
 
-void RAMMonitor::displayAverageRAM(size_t lastN) const {
+void RAMMonitor::displayAverageRAM(size_t lastN) {
     std::cout << "Average RAM usage for last " << lastN << " measures is " << getAverageUsage(lastN) << "%." << std::endl; 
 }

@@ -14,7 +14,7 @@ class RAMMonitor : public ProcessMonitor {
         ~RAMMonitor();
 
         void displayRAM() const;
-        void displayAverageRAM(size_t lastN = 10) const;
+        void displayAverageRAM(size_t lastN = 10);
 };
 
 #endif 
