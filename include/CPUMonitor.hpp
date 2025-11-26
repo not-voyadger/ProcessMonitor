@@ -13,9 +13,6 @@ class CPUMonitor : public ProcessMonitor {
     public:
         CPUMonitor();
         ~CPUMonitor();
-
-        void displayCPU() const;
-        void displayAverageCPU(size_t lastN = 10);
 };
 
 #endif

@@ -41,11 +41,3 @@ void CPUMonitor::calculateUsage() {
     prevKernel = kernel.QuadPart;
     prevUser = user.QuadPart;
 }
-
-void CPUMonitor::displayCPU() const{
-    std::cout << "Current usage of CPU is: " << usage << "%." << std::endl;
-}
-
-void CPUMonitor::displayAverageCPU(size_t lastN) {
-    std::cout << "Average CPU usage for last " << lastN << " measures is " << getAverageUsage(lastN) << "%." << std::endl; 
-}
