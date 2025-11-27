@@ -26,6 +26,27 @@ void printColoredValue(double value, double threshold, int width = 8) {
     SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 }
 
+std::string makeBar(double value, int width = 29) {
+    int filled = static_cast<int>(value / 100.0 * width);
+    int empty = width - filled;
+
+    std::string bar = "[";
+    for (int i = 0; i < filled; i++) bar += "#";
+    for (int i = 0; i < empty; i++) bar += "-";
+    bar += "]";
+
+    return bar;
+}
+
+void printFixed(const std::string& s, int width) {
+    std::string out = s;
+    if (out.size() < width)
+        out += std::string(width - out.size(), ' ');
+    else if (out.size() > width)
+        out = out.substr(0, width);
+    std::cout << out;
+}
+
 int main() {
     CPUMonitor cpu;
     RAMMonitor ram;
@@ -67,21 +88,43 @@ int main() {
         moveCursorTo(4, 36);
         printColoredValue(ram.getAverageUsage(10), THRESHOLD);
 
+        moveCursorTo(6, 0);
+        printFixed("| CPU Chart      | " + makeBar(cpu.getUsage()) + " |", 53);
+
+        moveCursorTo(7, 0);
+        printFixed("| RAM Chart      | " + makeBar(ram.getUsage()) + " |", 53);
+
+        moveCursorTo(8, 0);
+        std::cout << "+----------------+----------------+----------------+\n";
+
+
         if (cpu.getUsage() >= THRESHOLD || ram.getUsage() >= THRESHOLD) {
-            moveCursorTo(6, 0);
+            moveCursorTo(9, 0);
             HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-            SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_INTENSITY);
+            SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+            std::cout << "|  ";
+            SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_INTENSITY);    
             std::cout << "Dangerous level of usage! Close some processes!";
             SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
-        } else {
-            moveCursorTo(6, 0);
-            HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-            SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-            std::cout << "System usage is normal.                         ";
+            std::cout << " |";
+            moveCursorTo(10, 0);
             SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+            std::cout << "+----------------+----------------+----------------+\n";
+        } else {
+            moveCursorTo(9, 0);
+            HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+            SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+            std::cout << "|             ";
+            SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+            std::cout << "Process usage is normal.";
+            SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+            std::cout << "             |";
+            moveCursorTo(10, 0);
+            SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+            std::cout << "+----------------+----------------+----------------+\n";
         }
 
-        moveCursorTo(10, 0);
+        moveCursorTo(13, 0);
 
         std::cout.flush();
         std::this_thread::sleep_for(std::chrono::seconds(1));
