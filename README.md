@@ -12,7 +12,7 @@
 
 - Monitor CPU and RAM usage in real-time.
 - Track active processes and their resource consumption. Highlights dangerous consumption levels.
-- Simple yet elegant ASCII interface.
+- Simple yet elegant ASCII interface with updating graph.
 
 ---
 
@@ -20,14 +20,15 @@
 
 - **C++17** compatible compiler (e.g., MSVC, GCC, Clang)
 - **CMake** (optional, if you want to use a CMake build)
-- Windows
+- **Windows**
 
 ---
 
 ### TODO 
 
 - Add Network usage tracking.
-- ASCII graph.
 - Interface improvements.
 - Multithreading to track different metrics independently.
+
+---
 
